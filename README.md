@@ -16,12 +16,15 @@ After editing schema code locally, push to GitHub then upload to the live server
 
 ```bash
 git submodule update --init --recursive
+./scripts/extract-glide-workshop.sh   # local Glide models (first time / after vehicle updates)
 cp deploy.config.example deploy.config
 # Edit deploy.config — add FTP username/password from your host panel
 
 chmod +x scripts/deploy-ftp.sh
 ./scripts/deploy-ftp.sh
 ```
+
+Glide vehicles are **local addons** (not Workshop). See [`docs/LOCAL_VEHICLE_FILES.md`](docs/LOCAL_VEHICLE_FILES.md).
 
 Then **restart the server** from your host panel and confirm **Gamemode** is set to `morass`.
 
@@ -40,7 +43,12 @@ If uploads land in the wrong folder, browse FTP and adjust `FTP_REMOTE_GAMEMODES
 ├── gamemodes/
 │   ├── helix/          # Helix framework (git submodule)
 │   └── morass/         # Your custom schema — edit this to build Morass RP
-├── addons/             # Optional Workshop/local addons (folders only)
+├── addons/
+│   ├── glide/              # Glide framework Lua (submodule)
+│   ├── glide_content/      # Vehicle models/sounds (extracted, not in git)
+│   ├── glide_helicopters/  # Helicopter entity Lua (extracted)
+│   ├── morass_glide/       # Allowlist + optimization
+│   └── morass_vehicles/    # Custom ported cars
 ├── cfg/
 │   └── server.cfg      # Server configuration
 ├── data/               # Runtime data (Docker volume; not committed)

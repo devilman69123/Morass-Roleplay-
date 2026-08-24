@@ -23,9 +23,13 @@ FTP_REMOTE_GAMEMODES="${FTP_REMOTE_GAMEMODES:-garrysmod/gamemodes}"
 FTP_REMOTE_CFG="${FTP_REMOTE_CFG:-garrysmod/cfg}"
 FTP_REMOTE_ADDONS="${FTP_REMOTE_ADDONS:-garrysmod/addons}"
 
-echo "==> Initializing Helix submodule..."
+echo "==> Initializing submodules (Helix + Glide)..."
 cd "$REPO_ROOT"
-git submodule update --init --recursive gamemodes/helix
+git submodule update --init --recursive gamemodes/helix addons/glide
+
+if [[ ! -d "$REPO_ROOT/addons/glide_content/models" ]]; then
+  echo "WARN: addons/glide_content/models missing — run ./scripts/extract-glide-workshop.sh before deploy"
+fi
 
 echo "==> Deploying to $FTP_HOST:$FTP_PORT"
 echo "    gamemodes -> $FTP_REMOTE_GAMEMODES"
@@ -48,6 +52,8 @@ mirror -R --delete --verbose \
 mirror -R --verbose \
   "$REPO_ROOT/cfg" "$FTP_REMOTE_CFG"
 mirror -R --verbose \
+  --exclude-glob .git/ \
+  --exclude-glob .git \
   "$REPO_ROOT/addons" "$FTP_REMOTE_ADDONS"
 bye
 EOF

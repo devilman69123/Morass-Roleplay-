@@ -1,6 +1,6 @@
 MorassGlide = MorassGlide or {}
 
-MorassGlide.Workshop = {
+MorassGlide.WorkshopExtractIds = {
 	base = 3389728250,
 	helicopters = 3389795738,
 }

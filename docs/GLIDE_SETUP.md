@@ -1,25 +1,31 @@
 # Glide setup — Morass Roleplay (lean)
 
-Morass does **not** use the full Glide // Vehicle Collection. Mount only what you need and let `addons/morass_glide` strip visuals and block stray spawns.
-
-## Workshop (subscribe on the server host)
-
-| Addon | Workshop ID | Mount |
-|-------|-------------|--------|
-| Glide // Styled's Vehicle Base | [3389728250](https://steamcommunity.com/sharedfiles/filedetails/?id=3389728250) | **Required** |
-| Glide // GTAV: Helicopters | [3389795738](https://steamcommunity.com/sharedfiles/filedetails/?id=3389795738) | **Required** (2–3 civ helis) |
-
-**Do not mount** (unless you explicitly expand the allowlist):
-
-- Glide // Vehicle Collection (3389823726) — bundles experiments, Kiowa, extra packs
-- Glide // AW-119 Kiowa — armed
-- Glide // Styled's Experiments
-
-Create a **custom Steam collection** with only Base + Helicopters, then set:
+Morass serves Glide from **local server addons**, not Steam Workshop. See **[LOCAL_VEHICLE_FILES.md](LOCAL_VEHICLE_FILES.md)** for extraction and deploy.
 
 ```bash
-SERVER_ARGS=+host_workshop_collection YOUR_COLLECTION_ID
+./scripts/extract-glide-workshop.sh   # once per machine that deploys
+./scripts/deploy-ftp.sh
 ```
+
+Do **not** set `+host_workshop_collection` for Glide on the live server.
+
+## Addon layout
+
+| Folder | Contents |
+|--------|----------|
+| `addons/glide/` | Framework + base vehicle Lua (git submodule) |
+| `addons/glide_content/` | Models, materials, sounds (extracted) |
+| `addons/glide_helicopters/` | 3 helicopter entity Lua files (extracted) |
+| `addons/morass_glide/` | Allowlist + optimization |
+
+Workshop IDs are only used by `scripts/extract-glide-workshop.sh` on your PC:
+
+| Pack | ID | Used for |
+|------|-----|----------|
+| Glide // Styled's Vehicle Base | [3389728250](https://steamcommunity.com/sharedfiles/filedetails/?id=3389728250) | Assets → `glide_content` |
+| Glide // GTAV: Helicopters | [3389795738](https://steamcommunity.com/sharedfiles/filedetails/?id=3389795738) | Heli assets + entity Lua |
+
+**Do not extract** the full Vehicle Collection (3389823726), Kiowa, or Experiments packs.
 
 ## Morass vehicle allowlist
 
@@ -30,7 +36,7 @@ Configured in `addons/morass_glide/lua/autorun/sh_morass_glide_config.lua`.
 | **Boats** (base) | `gtav_dinghy`, `gtav_seashark` | Default Glide boats |
 | **Citizen** (base) | `gtav_blazer`, `gtav_dukes`, `gtav_gauntlet_classic`, `gtav_infernus`, `gtav_speedo` | No bikes (ragdoll fall-off cost) |
 | **Emergency** (base) | `gtav_police_cruiser` | Sirens kept |
-| **Helicopters** (heli pack) | `gtav_frogger`, `gtav_maverick`, `gtav_swift` | Verify names in spawn menu after first mount |
+| **Helicopters** (heli pack) | `gtav_frogger`, `gtav_maverick`, `gtav_swift` | Verify class names after extract |
 
 To change helicopters: open spawn menu → find 3 civilian helis → copy entity class names into `MorassGlide.Helicopters`.
 

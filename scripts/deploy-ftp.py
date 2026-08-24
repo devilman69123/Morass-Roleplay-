@@ -33,7 +33,7 @@ def ensure_dir(ftp: ftplib.FTP, remote_dir: str) -> None:
 def upload_tree(ftp: ftplib.FTP, local: Path, remote: str, exclude_names: set[str]) -> None:
     ensure_dir(ftp, remote)
     for item in sorted(local.iterdir()):
-        if item.name in exclude_names:
+        if item.name in exclude_names or item.name == ".git":
             continue
         remote_path = f"{remote}/{item.name}"
         if item.is_dir():
