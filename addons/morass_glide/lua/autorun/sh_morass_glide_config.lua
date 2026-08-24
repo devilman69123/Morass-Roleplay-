@@ -29,6 +29,12 @@ MorassGlide.Helicopters = {
 	gtav_swift = true,
 }
 
+-- Ported Glide entities (models from other packs, one Glide entity per car).
+-- category: citizen | boat | emergency | helicopter
+MorassGlide.Custom = {
+	-- morass_example_sedan = "citizen",
+}
+
 MorassGlide.Allowed = {}
 
 for class in pairs(MorassGlide.Boats) do
@@ -45,6 +51,14 @@ end
 
 for class in pairs(MorassGlide.Helicopters) do
 	MorassGlide.Allowed[class] = "helicopter"
+end
+
+for class, category in pairs(MorassGlide.Custom) do
+	MorassGlide.Allowed[class] = category
+end
+
+function MorassGlide.Register(class, category)
+	MorassGlide.Allowed[class] = category
 end
 
 function MorassGlide.GetCategory(class)

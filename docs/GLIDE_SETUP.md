@@ -68,3 +68,48 @@ What is removed or disabled for citizens: projected headlights, turn signals, br
 ## Deploy
 
 `morass_glide` is in `addons/` and deploys with `./scripts/deploy-ftp.sh`.
+
+## Adding non-Glide cars (one vehicle system)
+
+Glide **does not** run Simfphys, LVS, SCars, or `prop_vehicle_jeep` through its base. Those are separate physics/input/camera stacks. Mounting them alongside Glide means **two vehicle systems** — more lag, split ownership rules, and Helix hooks that only understand one of them.
+
+The Morass approach: **port the model into Glide** so it uses the same pipeline as every other car.
+
+| Approach | Extra systems? | Morass recommendation |
+|----------|----------------|------------------------|
+| New entity with `ENT.Base = "base_glide_car"` (etc.) | No — same Glide base | **Yes** |
+| Simfphys / LVS / Source jeep addon | Yes — full second framework | Avoid |
+| Raw Workshop car pack without Glide port | Won't drive under Glide | Port or skip |
+
+### What “porting” means
+
+1. Workshop **models** stay in a content addon (or existing pack).
+2. You add a thin **scripted entity** in `addons/morass_vehicles/lua/entities/` that derives from the right Glide base:
+
+   - Cars → `base_glide_car`
+   - Boats → `base_glide_boat`
+   - Helicopters → `base_glide_heli` or `base_glide_aircraft`
+
+3. Set `ENT.ChassisModel`, wheel offsets, camera, engine stream preset (copy from a similar official Glide car).
+4. **Do not** define `Headlights` / `LightSprites` on citizen ports — Morass strips them anyway.
+5. Register the class in `MorassGlide.Custom` in `sh_morass_glide_config.lua`:
+
+```lua
+MorassGlide.Custom = {
+	morass_your_sedan = "citizen",
+}
+```
+
+Or at runtime from schema: `MorassGlide.Register("morass_your_sedan", "citizen")`.
+
+Glide auto-registers anything with `GlideCategory` into `GlideVehicles`, uses `Glide.VehicleFactory` for spawn/dupes, and fires `Glide_CanEnterVehicle` — same as official cars. `morass_glide` ownership, allowlist, and light stripping apply automatically.
+
+### Template
+
+See `addons/morass_vehicles/lua/entities/_template_glide_car.lua`.
+
+### Porting effort
+
+Tuning wheel positions and handling takes time per model, but it is **content work** — not a new garage/money/keys framework. For Helix you still only wire spawn/buy through existing Morass hooks (vendors, commands, garages) calling `ents.Create("your_class")`.
+
+Glide wiki: [Editable Car Properties](https://github.com/StyledStrike/gmod-glide/wiki/Editable-Car-Properties)
