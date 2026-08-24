@@ -118,7 +118,7 @@ To deploy updates after pushing to GitHub:
 
 ## Developing your schema
 
-**AI and human developers:** read [`docs/AI_DEVELOPER_CONTEXT.md`](docs/AI_DEVELOPER_CONTEXT.md) before writing code. It covers performance targets, Helix reuse, code style, and addon conversion rules.
+**AI and human developers:** read [`docs/AI_DEVELOPER_CONTEXT.md`](docs/AI_DEVELOPER_CONTEXT.md) before writing code. Glide vehicles: [`docs/GLIDE_SETUP.md`](docs/GLIDE_SETUP.md).
 
 All Morass RP gameplay code lives in `gamemodes/morass/`. Key folders:
 
