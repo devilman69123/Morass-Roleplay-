@@ -1,0 +1,14 @@
+# FTP deployment config for the Morass production server.
+# Copy to deploy.config and fill in credentials from your host panel.
+# deploy.config is gitignored — never commit passwords.
+
+FTP_HOST=195.140.215.86
+FTP_PORT=8821
+FTP_USER=
+FTP_PASSWORD=
+
+# Paths on the FTP server (adjust after browsing your FTP root if uploads fail)
+# Common layouts: garrysmod/gamemodes or gmod/garrysmod/gamemodes
+FTP_REMOTE_GAMEMODES=garrysmod/gamemodes
+FTP_REMOTE_CFG=garrysmod/cfg
+FTP_REMOTE_ADDONS=garrysmod/addons

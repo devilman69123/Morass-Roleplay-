@@ -1,0 +1,26 @@
+services:
+  gmod-server:
+    image: ceifa/garrysmod:latest
+    container_name: morass-gmod
+    ports:
+      - "${PORT:-27095}:${PORT:-27095}/udp"
+      - "${PORT:-27095}:${PORT:-27095}"
+      - "27005:27005/udp"
+    volumes:
+      - ./gamemodes:/home/gmod/server/garrysmod/gamemodes
+      - ./addons:/home/gmod/server/garrysmod/addons
+      - ./cfg:/home/gmod/server/garrysmod/cfg
+      - ./data:/home/gmod/server/garrysmod/data
+    environment:
+      NAME: ${SERVER_NAME:-Morass Roleplay}
+      GAMEMODE: ${GAMEMODE:-morass}
+      MAP: ${MAP:-gm_construct}
+      MAXPLAYERS: ${MAXPLAYERS:-32}
+      PORT: ${PORT:-27095}
+      PRODUCTION: ${PRODUCTION:-0}
+      GSLT: ${GSLT:-}
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+      ARGS: ${SERVER_ARGS:-}
+      AUTOUPDATE: ${AUTOUPDATE:-1}
+    restart: unless-stopped

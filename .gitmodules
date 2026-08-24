@@ -1,0 +1,6 @@
+[submodule "gamemodes/helix"]
+	path = gamemodes/helix
+	url = https://github.com/NebulousCloud/helix.git
+[submodule "addons/glide"]
+	path = addons/glide
+	url = https://github.com/StyledStrike/gmod-glide.git

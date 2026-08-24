@@ -1,0 +1,25 @@
+# Local environment and secrets
+.env
+deploy.config
+
+# Docker / standalone server runtime data
+data/*
+!data/.gitkeep
+*.db
+sv.db
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Glide vehicle assets (extracted locally — see scripts/extract-glide-workshop.sh)
+addons/glide_content/models/**
+addons/glide_content/materials/**
+addons/glide_content/sound/**
+addons/glide_content/sounds/**
+addons/glide_helicopters/lua/**
+
+# Steam / GMod install (when SERVER_DIR points inside the repo)
+gmod-server/

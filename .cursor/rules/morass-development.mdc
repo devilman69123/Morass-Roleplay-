@@ -1,0 +1,30 @@
+---
+description: Morass Roleplay Helix development standards — performance, reuse, code style
+alwaysApply: true
+---
+
+# Morass Roleplay — development rules
+
+Full context: `docs/AI_DEVELOPER_CONTEXT.md`
+
+## Non-negotiables
+
+- **Performance first** — large player counts. No per-frame hooks, net spam, or `player.GetAll()` in hot paths without strong reason.
+- **Reuse Helix** — factions, classes, items, attributes, meta, hooks, libs, plugins. Never duplicate inventory, money, chat, or persistence.
+- **Schema only** — gameplay code in `gamemodes/morass/schema/`. Do not edit `gamemodes/helix/` for schema behaviour; override via hooks/meta.
+- **Human code** — match existing file conventions. No tutorial comments, section banners, or over-engineered validation on framework objects.
+- **Addons** — convert to Helix patterns; strip lag (scoped effects, timer-based logic, remove junk HUDs/autorun). No raw Workshop drops.
+
+## Code placement
+
+| Feature | Location |
+|---------|----------|
+| Jobs | `schema/factions/`, `schema/classes/` |
+| Items | `schema/items/` |
+| Hooks | `cl_hooks.lua`, `sh_hooks.lua`, `sv_hooks.lua` |
+| Shared logic | `schema/libs/` |
+| Char/player API | `schema/meta/` |
+
+## Production
+
+- Server: `195.140.215.86:27095` · Gamemode: `morass` · FTP deploy: `scripts/deploy-ftp.sh`
