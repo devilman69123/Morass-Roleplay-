@@ -2,7 +2,8 @@
 .env
 
 # Docker / standalone server runtime data
-data/
+data/*
+!data/.gitkeep
 *.db
 sv.db
 
