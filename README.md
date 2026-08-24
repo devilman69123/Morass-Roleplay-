@@ -47,7 +47,10 @@ If uploads land in the wrong folder, browse FTP and adjust `FTP_REMOTE_GAMEMODES
 ├── scripts/
 │   ├── setup-server.sh # Install GMod + link this repo on a VPS
 │   ├── start-server.sh # Start standalone server
-│   └── update-server.sh# git pull + update Helix + Steam validate
+│   ├── update-server.sh# git pull + update Helix + Steam validate
+│   └── deploy-ftp.sh   # Upload to production via FTP
+├── docs/
+│   └── AI_DEVELOPER_CONTEXT.md  # Standards for AI/human developers
 ├── docker-compose.yml  # Run the server in Docker (recommended for local/dev)
 └── .env.example        # Copy to .env and customize
 ```
@@ -78,7 +81,8 @@ Ports used:
 
 | Port | Protocol | Purpose |
 |------|----------|---------|
-| 27015 | UDP/TCP | Game + RCON |
+| 27095 | UDP/TCP | Game + RCON (production) |
+| 27015 | UDP/TCP | Default local Docker if you override `PORT` |
 | 27005 | UDP | Client port |
 
 On Linux, match bind-mount permissions:
@@ -114,6 +118,8 @@ To deploy updates after pushing to GitHub:
 
 ## Developing your schema
 
+**AI and human developers:** read [`docs/AI_DEVELOPER_CONTEXT.md`](docs/AI_DEVELOPER_CONTEXT.md) before writing code. It covers performance targets, Helix reuse, code style, and addon conversion rules.
+
 All Morass RP gameplay code lives in `gamemodes/morass/`. Key folders:
 
 | Path | Purpose |
@@ -143,10 +149,10 @@ git commit -m "Update Helix framework"
 | `SERVER_NAME` | Morass Roleplay | Browser hostname |
 | `GAMEMODE` | `morass` | Schema folder name |
 | `MAP` | `gm_construct` | Starting map |
-| `PORT` | `27015` | Game port |
+| `PORT` | `27095` | Game port |
 | `MAXPLAYERS` | `32` | Player cap |
 | `GSLT` | _(empty)_ | Steam GSLT for public listing |
-| `PRODUCTION` | `0` | `1` disables Lua hot-reload |
+| `PRODUCTION` | `1` | `1` disables Lua hot-reload (use `0` for local dev) |
 | `SERVER_ARGS` | _(empty)_ | Extra `srcds` arguments |
 
 ### MySQL (optional)
