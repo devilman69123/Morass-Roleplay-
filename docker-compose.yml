@@ -3,8 +3,8 @@ services:
     image: ceifa/garrysmod:latest
     container_name: morass-gmod
     ports:
-      - "${PORT:-27015}:27015/udp"
-      - "${PORT:-27015}:27015"
+      - "${PORT:-27095}:${PORT:-27095}/udp"
+      - "${PORT:-27095}:${PORT:-27095}"
       - "27005:27005/udp"
     volumes:
       - ./gamemodes:/home/gmod/server/garrysmod/gamemodes
@@ -16,6 +16,7 @@ services:
       GAMEMODE: ${GAMEMODE:-morass}
       MAP: ${MAP:-gm_construct}
       MAXPLAYERS: ${MAXPLAYERS:-32}
+      PORT: ${PORT:-27095}
       PRODUCTION: ${PRODUCTION:-0}
       GSLT: ${GSLT:-}
       PUID: ${PUID:-1000}

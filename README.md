@@ -2,6 +2,38 @@
 
 A Garry's Mod roleplay server built on the [Helix](https://github.com/NebulousCloud/helix) framework. This repository is the **home** for your server — schema code, Helix framework, configuration, and deployment tooling all live here.
 
+## Production server
+
+| Setting | Value |
+|---------|-------|
+| **Game server** | `195.140.215.86:27095` |
+| **FTP** | `195.140.215.86:8821` |
+| **Gamemode** | `morass` |
+
+### Deploy changes via FTP
+
+After editing schema code locally, push to GitHub then upload to the live server:
+
+```bash
+git submodule update --init --recursive
+cp deploy.config.example deploy.config
+# Edit deploy.config — add FTP username/password from your host panel
+
+chmod +x scripts/deploy-ftp.sh
+./scripts/deploy-ftp.sh
+```
+
+Then **restart the server** from your host panel and confirm **Gamemode** is set to `morass`.
+
+If uploads land in the wrong folder, browse FTP and adjust `FTP_REMOTE_GAMEMODES` in `deploy.config` (common paths: `garrysmod/gamemodes` or `gmod/garrysmod/gamemodes`).
+
+### Host panel checklist
+
+1. **Gamemode** → `morass`
+2. **Port** → `27095` (usually pre-set by host)
+3. **GSLT** → your Steam game server token (for public listing)
+4. Restart after each FTP deploy
+
 ## Repository layout
 
 ```

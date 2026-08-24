@@ -24,7 +24,7 @@ fi
 SERVER_NAME="${SERVER_NAME:-Morass Roleplay}"
 GAMEMODE="${GAMEMODE:-morass}"
 MAP="${MAP:-gm_construct}"
-PORT="${PORT:-27015}"
+PORT="${PORT:-27095}"
 MAXPLAYERS="${MAXPLAYERS:-32}"
 GSLT="${GSLT:-}"
 SERVER_ARGS="${SERVER_ARGS:-}"

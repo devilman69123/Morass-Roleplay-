@@ -1,5 +1,6 @@
 # Local environment and secrets
 .env
+deploy.config
 
 # Docker / standalone server runtime data
 data/*
